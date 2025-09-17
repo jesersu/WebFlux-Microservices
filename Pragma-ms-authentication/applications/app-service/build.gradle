@@ -1,0 +1,54 @@
+apply plugin: 'org.springframework.boot'
+
+ext {
+    set('springCloudVersion', "2025.0.0")
+}
+
+dependencies {
+    // Your existing modules
+    implementation project(':r2dbc-postgresql')
+    implementation project(':reactive-web')
+    implementation project(':model')
+    implementation project(':usecase')
+
+    //Eureka, Conifg Server and Actuator
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+    implementation 'org.springframework.cloud:spring-cloud-starter-config'
+    implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
+
+    // Spring + utils
+    implementation 'org.springframework.boot:spring-boot-starter'
+    implementation 'org.reactivecommons.utils:object-mapper:0.1.0'
+
+    // Flyway for migrations
+    implementation("org.flywaydb:flyway-database-postgresql")
+
+    // 🔑 Add JDBC driver for Flyway
+    runtimeOnly 'org.postgresql:postgresql'
+
+    // Dev & test
+    runtimeOnly 'org.springframework.boot:spring-boot-devtools'
+    testImplementation 'com.tngtech.archunit:archunit:1.4.1'
+    testImplementation 'com.fasterxml.jackson.core:jackson-databind'
+}
+
+dependencyManagement {
+    imports {
+        mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+    }
+}
+
+tasks.register('explodedJar', Copy) {
+    with jar
+    into layout.buildDirectory.dir("exploded")
+}
+
+jar {
+    // To disable the *-plain.jar
+    enabled = false
+}
+
+bootJar {
+    // Sets output jar name
+    archiveFileName = "${project.getParent().getName()}.${archiveExtension.get()}"
+}
