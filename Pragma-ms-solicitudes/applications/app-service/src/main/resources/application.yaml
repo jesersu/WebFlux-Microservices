@@ -8,14 +8,14 @@ spring:
   profiles:
     include: null
   datasource:
-    url: jdbc:postgresql://${POSTGRES_HOST:postgres}:${POSTGRES_PORT:5432}/${POSTGRES_DB:pragmadb}
+    url: jdbc:postgresql://${POSTGRES_HOST:postgres}:${POSTGRES_PORT:5432}/${POSTGRES_DB:solicitudesdb}
     username: ${POSTGRES_USER:pragmauser}
     password: ${POSTGRES_PASSWORD:password}
     driver-class-name: org.postgresql.Driver
 
   flyway:
     enabled: true
-    url: jdbc:postgresql://${POSTGRES_HOST:postgres}:${POSTGRES_PORT:5432}/${POSTGRES_DB:pragmadb}
+    url: jdbc:postgresql://${POSTGRES_HOST:postgres}:${POSTGRES_PORT:5432}/${POSTGRES_DB:solicitudesdb}
     user: ${POSTGRES_USER:pragmauser}
     password: ${POSTGRES_PASSWORD:password}
     schemas: public
